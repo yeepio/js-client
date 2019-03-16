@@ -1,0 +1,26 @@
+# env variables
+.env.local
+.env.development.local
+.env.development
+.env.test.local
+.env.production.local
+.env.production
+.env
+
+# config files
+.eslintrc
+.eslintignore
+.gitignore
+.babelrc
+.babelrc.js
+.editorconfig
+jsconfig.json
+rollup.config.js
+
+# source files
+/src
+
+# test + coverage
+/coverage
+
+
