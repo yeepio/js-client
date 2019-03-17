@@ -22,7 +22,7 @@
   "engines": {
     "node": ">=6"
   },
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest --config=jest.json",
     "coverage": "jest --config=jest.json --coverage",
@@ -30,7 +30,7 @@
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
     "postbuild": "cp -rf package.json ./dist",
-    "dist": "cd ./dist && npm publish --access=public"
+    "publish": "cd ./dist && npm publish --access=public"
   },
   "dependencies": {
     "axios": "^0.18.0",

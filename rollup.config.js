@@ -1,7 +1,9 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
-import filesize from 'rollup-plugin-filesize';
+import commonjs from 'rollup-plugin-commonjs';
+import esModuleInterop from 'rollup-plugin-es-module-interop';
 import progress from 'rollup-plugin-progress';
+import json from 'rollup-plugin-json';
 
 export default ['src/index.js'].map((file) => ({
   input: file,
@@ -16,13 +18,17 @@ export default ['src/index.js'].map((file) => ({
     },
   ],
   plugins: [
-    resolve(),
+    resolve({
+      jail: '/src/',
+    }),
     babel({
       exclude: 'node_modules/**',
     }),
+    commonjs(),
+    json(),
+    esModuleInterop(),
     progress({
       clearLine: false,
     }),
-    filesize(),
   ],
 }));
