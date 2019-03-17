@@ -7,8 +7,9 @@ Yeep API client for Node.js and the browser.
 
 #### Features
 
-- Works on Node.js v.6+ or any modern browser (supports ie11);
-- Exposes promise-based API;
+- Works with Node.js v.6+ or any modern browser (including ie11);
+- Exposes promise-based API (support async/await);
+- Manages session renewal automatically;
 - Matches Yeep API methods, one-to-one.
 
 ## Installation
