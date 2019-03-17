@@ -7,17 +7,15 @@ Yeep API client for Node.js and the browser.
 
 #### Features
 
-- Supports promises + async/await.
+- Works on Node.js v.6+ or any modern browser (supports ie11);
+- Exposes promise-based API;
+- Matches Yeep API methods, one-to-one.
 
 ## Installation
 
 ```
 $ npm install @yeep/client
 ```
-
-#### Requirements
-
-- Node.js v.6+
 
 ## Quick start
 
