@@ -4,6 +4,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import esModuleInterop from 'rollup-plugin-es-module-interop';
 import progress from 'rollup-plugin-progress';
 import json from 'rollup-plugin-json';
+import copy from 'rollup-plugin-copy';
 
 export default ['src/index.js'].map((file) => ({
   input: file,
@@ -27,6 +28,11 @@ export default ['src/index.js'].map((file) => ({
     commonjs(),
     json(),
     esModuleInterop(),
+    copy({
+      'README.md': 'dist/README.md',
+      LICENSE: 'dist/LICENSE',
+      'package.json': 'dist/package.json',
+    }),
     progress({
       clearLine: false,
     }),

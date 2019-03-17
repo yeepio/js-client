@@ -29,7 +29,6 @@
     "lint": "eslint .",
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
-    "postbuild": "cp -rf package.json ./dist",
     "publish": "cd ./dist && npm publish --access=public"
   },
   "dependencies": {
