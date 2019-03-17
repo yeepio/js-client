@@ -2,7 +2,8 @@
 
 Yeep API client for Node.js and the browser.
 
-[![Build Status](https://travis-ci.com/yeepio/js-client.svg?branch=master)](https://travis-ci.com/yeepio/js-client) [![npm version](https://badge.fury.io/js/@yeep/client.svg)](https://badge.fury.io/js/@yeep/client)
+[![Build Status](https://travis-ci.com/yeepio/js-client.svg?branch=master)](https://travis-ci.com/yeepio/js-client)
+[![npm version](https://img.shields.io/npm/v/@yeep/client.svg?style=flat-square)](https://www.npmjs.com/package/@yeep/client)
 
 #### Features
 
