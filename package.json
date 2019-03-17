@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/yeepio/js-client#readme",
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "main": "dist/index.js",
   "scripts": {
