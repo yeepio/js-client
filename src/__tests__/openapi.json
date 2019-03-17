@@ -1,0 +1,1034 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "yeep",
+    "description": "User management made easy",
+    "license": { "name": "Apache 2.0" },
+    "version": "1.0.0-alpha.1"
+  },
+  "externalDocs": {
+    "url": "https://github.com/yeepio/yeep/blob/master/docs/index.md"
+  },
+  "paths": {
+    "/api/org.create": {
+      "post": {
+        "operationId": "org.create",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/org.create.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org.delete": {
+      "post": {
+        "operationId": "org.delete",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/org.delete.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org.addMember": {
+      "post": {
+        "operationId": "org.addMember",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/org.addMember.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org.removeMember": {
+      "post": {
+        "operationId": "org.removeMember",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/org.removeMember.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.create": {
+      "post": {
+        "operationId": "user.create",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.create.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.delete": {
+      "post": {
+        "operationId": "user.delete",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.delete.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.info": {
+      "post": {
+        "operationId": "user.info",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.info.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.assignPermission": {
+      "post": {
+        "operationId": "user.assignPermission",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.assignPermission.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.revokePermission": {
+      "post": {
+        "operationId": "user.revokePermission",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.revokePermission.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.assignRole": {
+      "post": {
+        "operationId": "user.assignRole",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.assignRole.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.revokeRole": {
+      "post": {
+        "operationId": "user.revokeRole",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.revokeRole.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.list": {
+      "post": {
+        "operationId": "user.list",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.list.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.deactivate": {
+      "post": {
+        "operationId": "user.deactivate",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.deactivate.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.activate": {
+      "post": {
+        "operationId": "user.activate",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.activate.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.setPicture": {
+      "post": {
+        "operationId": "user.setPicture",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.setPicture.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.deletePicture": {
+      "post": {
+        "operationId": "user.deletePicture",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.deletePicture.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.forgotPassword": {
+      "post": {
+        "operationId": "user.forgotPassword",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.forgotPassword.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.resetPassword": {
+      "post": {
+        "operationId": "user.resetPassword",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.resetPassword.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.create": {
+      "post": {
+        "operationId": "session.create",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.create.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.destroy": {
+      "post": {
+        "operationId": "session.destroy",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.destroy.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.refresh": {
+      "post": {
+        "operationId": "session.refresh",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.refresh.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/permission.create": {
+      "post": {
+        "operationId": "permission.create",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/permission.create.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/permission.delete": {
+      "post": {
+        "operationId": "permission.delete",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/permission.delete.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/permission.info": {
+      "post": {
+        "operationId": "permission.info",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/permission.info.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/permission.update": {
+      "post": {
+        "operationId": "permission.update",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/permission.update.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/permission.list": {
+      "post": {
+        "operationId": "permission.list",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/permission.list.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/role.create": {
+      "post": {
+        "operationId": "role.create",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/role.create.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/role.info": {
+      "post": {
+        "operationId": "role.info",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/role.info.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/role.delete": {
+      "post": {
+        "operationId": "role.delete",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/role.delete.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/role.update": {
+      "post": {
+        "operationId": "role.update",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/role.update.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/role.list": {
+      "post": {
+        "operationId": "role.list",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/role.list.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/invitation.create": {
+      "post": {
+        "operationId": "invitation.create",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/invitation.create.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/invitation.accept": {
+      "post": {
+        "operationId": "invitation.accept",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/invitation.accept.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/invitation.list": {
+      "post": {
+        "operationId": "invitation.list",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/invitation.list.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": { "type": "integer", "format": "int32" },
+                        "message": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
