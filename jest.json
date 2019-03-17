@@ -1,0 +1,11 @@
+{
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "collectCoverageFrom": ["src/**/*.{js}"],
+  "testPathIgnorePatterns": ["/node_modules", "/dist"],
+  "transform": {
+    "^.+\\.jsx$": "babel-jest",
+    "^.+\\.js$": "babel-jest"
+  },
+  "verbose": true
+}

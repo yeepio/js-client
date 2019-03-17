@@ -10,8 +10,8 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --config=config/jest.json",
-    "coverage": "jest --config=config/jest.json --coverage",
+    "test": "jest --config=jest.json",
+    "coverage": "jest --config=jest.json --coverage",
     "lint": "eslint .",
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
