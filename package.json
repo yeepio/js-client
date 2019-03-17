@@ -2,9 +2,23 @@
   "name": "@yeep/client",
   "version": "1.0.0",
   "description": "Yeep JavaScript/Node.js API client",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yeepio/js-client.git"
+  },
   "keywords": [
-    "yeep"
+    "yeep",
+    "client",
+    "sdk"
   ],
+  "author": {
+    "name": "Dimitrios C. Michalakos"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/yeepio/js-client/issues"
+  },
+  "homepage": "https://github.com/yeepio/js-client#readme",
   "engines": {
     "node": ">=4"
   },
