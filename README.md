@@ -11,7 +11,7 @@ Yeep API client for Node.js and the browser.
 ## Installation
 
 ```
-$ npm install yeep
+$ npm install @yeep/client
 ```
 
 #### Requirements
