@@ -90,7 +90,7 @@ class YeepClient {
           version: response.data.info.version,
         };
 
-        const pathObj = response.data.path;
+        const pathObj = response.data.paths;
         for (const path in pathObj) {
           if (pathObj[path].post) {
             const operationObj = pathObj[path].post;
