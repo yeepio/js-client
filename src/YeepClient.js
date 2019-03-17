@@ -4,6 +4,7 @@ import isString from 'lodash/isString';
 import memoize from 'lodash/memoize';
 import set from 'lodash/set';
 import partial from 'lodash/partial';
+import SessionManager from './SessionManager';
 
 class YeepClient {
   constructor(props) {
@@ -46,20 +47,7 @@ class YeepClient {
     return headers;
   }
 
-  static handleError(err) {
-    if (axios.isCancel(err)) {
-      throw err; // rethrow
-    }
-
-    const { data } = err.response;
-    if (data.code === 400) {
-      throw data.details[0];
-    }
-
-    throw data;
-  }
-
-  request = (ctx, props = {}) => {
+  request = async (ctx, props = {}) => {
     if (!isObject(props)) {
       throw new TypeError(
         `Invalid "props" argument; expected object, received ${typeof props}`
@@ -68,46 +56,94 @@ class YeepClient {
 
     const { accessToken, cancelToken, ...otherProps } = props;
 
-    return this.client
-      .request({
+    try {
+      return this.client.request({
         method: ctx.method,
         url: ctx.path,
         headers: this.constructor.getHeaders({ accessToken }),
         data: otherProps,
         cancelToken,
-      })
-      .catch(this.constructor.handleError);
+      });
+    } catch (err) {
+      if (axios.isCancel(err)) {
+        throw err; // rethrow
+      }
+
+      const { data } = err.response;
+      if (data.code === 400) {
+        throw data.details[0];
+      }
+
+      throw data;
+    }
   };
 
-  api = memoize(() => {
-    return this.client
-      .request({
-        method: 'get',
-        url: '/api/docs',
-      })
-      .then((response) => {
-        const api = {
-          version: response.data.info.version,
-        };
+  api = memoize(async () => {
+    // retrieve API docs (i.e. open api v3 specfile)
+    const response = await this.client.request({
+      method: 'get',
+      url: '/api/docs',
+    });
 
-        const pathObj = response.data.paths;
-        for (const path in pathObj) {
-          if (pathObj[path].post) {
-            const operationObj = pathObj[path].post;
-            set(
-              api,
-              operationObj.operationId,
-              partial(this.request, {
-                method: 'post',
-                path,
-              })
-            );
-          }
-        }
+    // create api object
+    const api = {
+      version: response.data.info.version,
+    };
 
-        return api;
-      });
+    // decorate api object
+    const pathObj = response.data.paths;
+    for (const path in pathObj) {
+      if (pathObj[path].post) {
+        const operationObj = pathObj[path].post;
+        set(
+          api,
+          operationObj.operationId,
+          partial(this.request, {
+            method: 'post',
+            path,
+          })
+        );
+      }
+    }
+
+    // return api object
+    return api;
   });
+
+  async session(props) {
+    // validate input
+    if (!isObject(props)) {
+      throw new TypeError(
+        `Invalid "props" argument; expected object, received ${typeof props}`
+      );
+    }
+
+    const { user, password } = props;
+    if (!isString(user)) {
+      throw new TypeError(
+        `Invalid "user" property; expected string, received ${typeof user}`
+      );
+    }
+    if (!isString(password)) {
+      throw new TypeError(
+        `Invalid "password" property; expected string, received ${typeof password}`
+      );
+    }
+
+    // get api client
+    const api = await this.api();
+
+    // create session with API
+    const response = await api.session.create(props);
+
+    // construct session manager
+    const { accessToken, refreshToken } = response;
+    return new SessionManager({
+      accessToken,
+      refreshToken,
+      api,
+    });
+  }
 }
 
 export default YeepClient;
