@@ -42,7 +42,7 @@ describe('YeepClient', () => {
       baseUrl: 'http://demo.yeep.com',
     });
 
-    test('generates api based on API docs', async () => {
+    test('generates api based on API docs and memoizes response', async () => {
       const api = await client.api();
       expect(api).toMatchObject({
         version: openapi.info.version,
