@@ -16,7 +16,7 @@ class YeepClient {
     const { baseUrl } = props;
     if (!isString(baseUrl)) {
       throw new TypeError(
-        `Invalid "baseUrl" property; expected string, received ${typeof props}`
+        `Invalid "baseUrl" property; expected string, received ${typeof baseUrl}`
       );
     }
 
