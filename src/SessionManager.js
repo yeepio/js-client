@@ -5,8 +5,23 @@ import jwtDecode from 'jwt-decode';
 import isNode from 'detect-node';
 
 class SessionManager extends EventEmitter {
-  constructor(props) {
+  constructor(client) {
     super();
+    this.client = client;
+    this.state = {
+      accessToken: null,
+      refreshToken: null,
+    };
+    this.refreshTimeout = null;
+  }
+
+  async login(props) {
+    // ensure accessToken does not already exist
+    if (this.state.accessToken) {
+      throw new Error(
+        'Session already exists; did you forget to call logout()?'
+      );
+    }
 
     // validate input
     if (!isObject(props)) {
@@ -15,37 +30,33 @@ class SessionManager extends EventEmitter {
       );
     }
 
-    const { api, accessToken, refreshToken } = props;
-    if (!isObject(api)) {
+    const { user, password } = props;
+    if (!isString(user)) {
       throw new TypeError(
-        `Invalid "api" property; expected object, received ${typeof api}`
+        `Invalid "user" property; expected string, received ${typeof user}`
       );
     }
-    if (!isString(accessToken)) {
+    if (!isString(password)) {
       throw new TypeError(
-        `Invalid "accessToken" property; expected string, received ${typeof accessToken}`
-      );
-    }
-    if (!isString(refreshToken)) {
-      throw new TypeError(
-        `Invalid "refreshToken" property; expected string, received ${typeof refreshToken}`
+        `Invalid "password" property; expected string, received ${typeof password}`
       );
     }
 
-    // set context
-    this.context = {
-      api,
-    };
+    // create session with API
+    const api = await this.client.api();
+    const response = await api.session.create(props);
+    const { accessToken, refreshToken } = response;
 
-    // set state
-    this.state = {
-      accessToken,
-      refreshToken,
-    };
+    // update state
+    this.state.accessToken = accessToken;
+    this.state.refreshToken = refreshToken;
 
-    // set next refresh
-    const decoded = jwtDecode(this.state.accessToken);
-    this.scheduleNextRefresh(decoded * 1000 - Date.now());
+    // emit event
+    this.emit('create', this.state);
+
+    // schedule next refresh 10 seconds before the accessToken expires
+    const decoded = jwtDecode(accessToken);
+    this.scheduleNextRefresh(decoded.exp * 1000 - 10000 - Date.now());
 
     // add visibilitychange listener (browser-only)
     if (!isNode) {
@@ -69,22 +80,20 @@ class SessionManager extends EventEmitter {
 
   async refresh() {
     // refresh session with API
-    const { api } = this.context;
+    const api = await this.client.api();
     const response = await api.session.refresh(this.state);
+    const { accessToken, refreshToken } = response;
 
     // update state
-    const { accessToken, refreshToken } = response;
-    this.state = {
-      accessToken,
-      refreshToken,
-    };
+    this.state.accessToken = accessToken;
+    this.state.refreshToken = refreshToken;
 
     // emit event
     this.emit('refresh', this.state);
 
-    // set next refresh
-    const decoded = jwtDecode(this.state.accessToken);
-    this.scheduleNextRefresh(decoded * 1000 - Date.now());
+    // schedule next refresh 10 seconds before the new accessToken expires
+    const decoded = jwtDecode(accessToken);
+    this.scheduleNextRefresh(decoded.exp * 1000 - 10000 - Date.now());
   }
 
   scheduleNextRefresh(ms) {
@@ -92,7 +101,7 @@ class SessionManager extends EventEmitter {
     this.refreshTimeout = setTimeout(() => {
       this.refresh().catch((err) => {
         this.emit('error', err);
-        this.scheduleNextRefresh((ms || 300) * 2); // call refresh again with delay
+        this.scheduleNextRefresh((ms || 300) * 2); // call refresh again with 2x delay
       });
     }, ms);
   }
@@ -102,18 +111,22 @@ class SessionManager extends EventEmitter {
     this.refreshTimeout = null;
   }
 
-  async destroy() {
-    // destroy session with API
-    const { api } = this.context;
-    await api.session.destroy(this.state);
-
+  async logout() {
     // cancel next refresh
     this.cancelNextRefresh();
+
+    // destroy session with API
+    const api = await this.client.api();
+    await api.session.destroy(this.state);
+
+    // clear state
+    this.state.accessToken = null;
+    this.state.refreshToken = null;
 
     // emit event
     this.emit('destroy');
 
-    // remove visibilitychange listener (browser-only)
+    // remove document visibilitychange listener (browser-only)
     if (!isNode) {
       document.removeEventListener(
         'visibilitychange',

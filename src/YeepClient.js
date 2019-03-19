@@ -36,6 +36,7 @@ class YeepClient {
     }
 
     this.client = axios.create(options);
+    this.session = new SessionManager(this);
   }
 
   static getHeaders({ accessToken }) {
@@ -111,41 +112,6 @@ class YeepClient {
     // return api object
     return api;
   });
-
-  async session(props) {
-    // validate input
-    if (!isObject(props)) {
-      throw new TypeError(
-        `Invalid "props" argument; expected object, received ${typeof props}`
-      );
-    }
-
-    const { user, password } = props;
-    if (!isString(user)) {
-      throw new TypeError(
-        `Invalid "user" property; expected string, received ${typeof user}`
-      );
-    }
-    if (!isString(password)) {
-      throw new TypeError(
-        `Invalid "password" property; expected string, received ${typeof password}`
-      );
-    }
-
-    // get api client
-    const api = await this.api();
-
-    // create session with API
-    const response = await api.session.create(props);
-
-    // construct session manager
-    const { accessToken, refreshToken } = response;
-    return new SessionManager({
-      accessToken,
-      refreshToken,
-      api,
-    });
-  }
 }
 
 export default YeepClient;
