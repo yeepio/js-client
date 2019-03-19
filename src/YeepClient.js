@@ -4,6 +4,7 @@ import isString from 'lodash/isString';
 import memoize from 'lodash/memoize';
 import set from 'lodash/set';
 import partial from 'lodash/partial';
+import isNode from 'detect-node';
 import SessionManager from './SessionManager';
 
 class YeepClient {
@@ -27,7 +28,7 @@ class YeepClient {
     };
 
     // use http and https native modules when running in node.js
-    if (typeof module !== 'undefined' && module.exports) {
+    if (isNode) {
       const http = require('http');
       options.httpAgent = new http.Agent({ keepAlive: true });
       const https = require('https');
