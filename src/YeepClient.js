@@ -57,13 +57,14 @@ class YeepClient {
     const { accessToken, cancelToken, ...otherProps } = props;
 
     try {
-      return this.client.request({
+      const response = await this.client.request({
         method: ctx.method,
         url: ctx.path,
         headers: this.constructor.getHeaders({ accessToken }),
         data: otherProps,
         cancelToken,
       });
+      return response.data;
     } catch (err) {
       if (axios.isCancel(err)) {
         throw err; // rethrow
