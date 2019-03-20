@@ -5,6 +5,7 @@ import memoize from 'lodash/memoize';
 import set from 'lodash/set';
 import partial from 'lodash/partial';
 import isNode from 'detect-node';
+import YeepError from './YeepError';
 
 class YeepClient {
   constructor(props) {
@@ -56,27 +57,25 @@ class YeepClient {
 
     const { accessToken, cancelToken, ...otherProps } = props;
 
-    try {
-      const response = await this.client.request({
-        method: ctx.method,
-        url: ctx.path,
-        headers: this.constructor.getHeaders({ accessToken }),
-        data: otherProps,
-        cancelToken,
-      });
-      return response.data;
-    } catch (err) {
-      if (axios.isCancel(err)) {
-        throw err; // rethrow
-      }
+    const response = await this.client.request({
+      method: ctx.method,
+      url: ctx.path,
+      headers: this.constructor.getHeaders({ accessToken }),
+      data: otherProps,
+      cancelToken,
+    });
 
-      const { data } = err.response;
-      if (data.code === 400) {
-        throw data.details[0];
-      }
+    const { data } = response;
 
-      throw data;
+    if (!data.ok) {
+      throw new YeepError(
+        data.error.message,
+        data.error.code,
+        data.error.details
+      );
     }
+
+    return data;
   };
 
   api = memoize(async () => {
