@@ -6,7 +6,7 @@ import progress from 'rollup-plugin-progress';
 import json from 'rollup-plugin-json';
 import copy from 'rollup-plugin-copy';
 
-export default ['src/index.js'].map((file) => ({
+export default ['src/index.js', 'src/SessionManager.js'].map((file, i) => ({
   input: file,
   output: [
     {
@@ -28,11 +28,13 @@ export default ['src/index.js'].map((file) => ({
     commonjs(),
     json(),
     esModuleInterop(),
-    copy({
-      'README.md': 'dist/README.md',
-      LICENSE: 'dist/LICENSE',
-      'package.json': 'dist/package.json',
-    }),
+    i === 0
+      ? copy({
+          'README.md': 'dist/README.md',
+          LICENSE: 'dist/LICENSE',
+          'package.json': 'dist/package.json',
+        })
+      : null,
     progress({
       clearLine: false,
     }),
