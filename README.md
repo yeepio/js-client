@@ -45,46 +45,50 @@ yeep
   });
 ```
 
-### Session management
+## Session management
 
-Session tokens expire and you need to refresh them manually. Having long expiration times is a bad security practice. Yeep exposes a _SessionManager_ to manage session tokens automatically.
+Session tokens expire and you need to refresh them manually. Having long expiration times is a bad security practice. Yeep exposes _SessionManager_ to manage session tokens automatically.
 
 ```javascript
 const YeepClient = require('@yeep/client');
+const SessionManager = require('@yeep/client/SessionManager');
 
 // create new yeep client
 const yeep = new YeepClient({
   baseUrl: 'https://yeep.acme.com', // replace this with your own domain
 });
 
+// create session manager
+const sessionManager = new SessionManager(yeep);
+
 // subscribe to session create events
-yeep.session.on('create', ({ accessToken, refreshToken }) => {
+sessionManager.on('create', ({ accessToken, refreshToken }) => {
   console.log('session created');
 });
 
 // subscribe to session refresh events
-yeep.session.on('refresh', ({ accessToken, refreshToken }) => {
+sessionManager.on('refresh', ({ accessToken, refreshToken }) => {
   console.log('session updated');
 });
 
 // subscribe to session destroy events
-yeep.session.on('destroy', () => {
+sessionManager.on('destroy', () => {
   console.log('session destroyed');
 });
 
 // subscribe to session errors
-yeep.session.on('error', (err) => {
-  console.error("bummer, here's an error:", err);
+sessionManager.on('error', (err) => {
+  console.error('bummer, an error occured:', err);
 });
 
 // create new session and automatically refresh it before it expires
-yeep.session.login({
+sessionManager.login({
   user: 'coyote@acme.com',
   password: 'catch-the-b1rd$',
 });
 
 // when you are done with your session simply call...
-yeep.session.logout();
+sessionManager.logout();
 ```
 
 #### Notes
@@ -94,7 +98,7 @@ yeep.session.logout();
    The two are quite different!
 
    ```javascript
-   yeep.session; // stateful function renewing session tokens automatically before they expire
+   sessionManager.login(); // stateful function renewing session tokens automatically before they expire
    ```
 
    ```javascript
