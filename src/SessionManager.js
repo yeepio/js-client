@@ -7,6 +7,17 @@ import isNode from 'detect-node';
 class SessionManager extends EventEmitter {
   constructor(client) {
     super();
+
+    // validate input
+    if (!(isObject(client) && client.api)) {
+      // We could easily test for client being an instance of YeepClient, however this would result
+      // in a large bundle since YeepClient needs to be imported as well.
+      // Note that SessionManager comes with it's own bundle.
+      throw new TypeError(
+        `Invalid "client" param; expected instance of YeepClient, received ${typeof client}`
+      );
+    }
+
     this.client = client;
     this.state = {
       accessToken: null,

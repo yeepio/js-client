@@ -5,7 +5,6 @@ import memoize from 'lodash/memoize';
 import set from 'lodash/set';
 import partial from 'lodash/partial';
 import isNode from 'detect-node';
-import SessionManager from './SessionManager';
 
 class YeepClient {
   constructor(props) {
@@ -36,7 +35,6 @@ class YeepClient {
     }
 
     this.client = axios.create(options);
-    this.session = new SessionManager(this);
   }
 
   static getHeaders({ accessToken }) {
