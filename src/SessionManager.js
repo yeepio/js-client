@@ -30,7 +30,7 @@ class SessionManager extends EventEmitter {
     // ensure accessToken does not already exist
     if (this.state.accessToken) {
       throw new Error(
-        'Session already exists; did you forget to call logout()?'
+        'Session token already exists; your must call logout() before logging-in again'
       );
     }
 
@@ -123,6 +123,13 @@ class SessionManager extends EventEmitter {
   }
 
   async logout() {
+    // ensure accessToken exists
+    if (!this.state.accessToken) {
+      throw new Error(
+        "Session token not found; it doesn't make sense to call logout() if you have not logged in first"
+      );
+    }
+
     // cancel next refresh
     this.cancelNextRefresh();
 

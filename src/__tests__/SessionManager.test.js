@@ -104,6 +104,15 @@ describe('SessionManager', () => {
         refreshToken,
       });
     });
+
+    test('throws error when attempting to login twice', async () => {
+      expect(
+        sessionManager.login({
+          user: 'coyote',
+          password: 'catch-the-b1rd$',
+        })
+      ).rejects.toThrowError(/Session token already exists/);
+    });
   });
 
   describe('logout()', () => {
@@ -112,7 +121,20 @@ describe('SessionManager', () => {
       ok: 'true',
     });
 
+    test('throws error when calling logout() without having logged-in first', async () => {
+      expect(
+        sessionManager.logout({
+          user: 'coyote',
+          password: 'catch-the-b1rd$',
+        })
+      ).rejects.toThrowError(/Session token not found/);
+    });
+
     test('destroys session tokens, emits "destroy" and cancels next refresh', async () => {
+      await sessionManager.login({
+        user: 'coyote',
+        password: 'catch-the-b1rd$',
+      });
       const f = jest.fn();
       sessionManager.once('destroy', f);
       await sessionManager.logout();
