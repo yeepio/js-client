@@ -29,7 +29,7 @@
     "lint": "eslint .",
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
-    "publish": "cd ./dist && npm publish --access=public"
+    "dist": "cd ./dist && npm publish --access=public"
   },
   "dependencies": {
     "axios": "^0.18.0",
