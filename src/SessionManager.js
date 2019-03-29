@@ -112,7 +112,7 @@ class SessionManager extends EventEmitter {
     this.refreshTimeout = setTimeout(() => {
       this.refresh().catch((err) => {
         this.emit('error', err);
-        this.scheduleNextRefresh((ms || 300) * 2); // call refresh again with 2x delay
+        this.scheduleNextRefresh(ms === 0 ? 3000 : ms); // call refresh again
       });
     }, ms);
   }
