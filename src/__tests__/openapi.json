@@ -3,7 +3,9 @@
   "info": {
     "title": "yeep",
     "description": "User management made easy",
-    "license": { "name": "Apache 2.0" },
+    "license": {
+      "name": "Apache 2.0"
+    },
     "version": "1.0.0-alpha.1"
   },
   "externalDocs": {
@@ -24,12 +26,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -54,12 +63,93 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org.list": {
+      "post": {
+        "operationId": "org.list",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/org.list.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org.update": {
+      "post": {
+        "operationId": "org.update",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/org.update.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -84,12 +174,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -114,12 +211,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -144,12 +248,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -174,12 +285,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -204,12 +322,56 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user.update": {
+      "post": {
+        "operationId": "user.update",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.update.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -234,12 +396,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -264,12 +433,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -294,12 +470,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -324,12 +507,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -354,12 +544,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -384,12 +581,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -414,12 +618,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -430,11 +641,11 @@
         }
       }
     },
-    "/api/user.setPicture": {
+    "/api/user.uploadPicture": {
       "post": {
-        "operationId": "user.setPicture",
+        "operationId": "user.uploadPicture",
         "externalDocs": {
-          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.setPicture.md"
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.uploadPicture.md"
         },
         "responses": {
           "200": {
@@ -444,12 +655,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -474,12 +692,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -504,12 +729,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -534,12 +766,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -550,11 +789,11 @@
         }
       }
     },
-    "/api/session.create": {
+    "/api/user.verifyEmail": {
       "post": {
-        "operationId": "session.create",
+        "operationId": "user.verifyEmail",
         "externalDocs": {
-          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.create.md"
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/user.verifyEmail.md"
         },
         "responses": {
           "200": {
@@ -564,12 +803,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -580,11 +826,11 @@
         }
       }
     },
-    "/api/session.destroy": {
+    "/api/session.issueToken": {
       "post": {
-        "operationId": "session.destroy",
+        "operationId": "session.issueToken",
         "externalDocs": {
-          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.destroy.md"
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.issueToken.md"
         },
         "responses": {
           "200": {
@@ -594,12 +840,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -610,11 +863,11 @@
         }
       }
     },
-    "/api/session.refresh": {
+    "/api/session.refreshToken": {
       "post": {
-        "operationId": "session.refresh",
+        "operationId": "session.refreshToken",
         "externalDocs": {
-          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.refresh.md"
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.refreshToken.md"
         },
         "responses": {
           "200": {
@@ -624,12 +877,167 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.destroyToken": {
+      "post": {
+        "operationId": "session.destroyToken",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.destroyToken.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.setCookie": {
+      "post": {
+        "operationId": "session.setCookie",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.setCookie.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.refreshCookie": {
+      "post": {
+        "operationId": "session.refreshCookie",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.refreshCookie.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session.destroyCookie": {
+      "post": {
+        "operationId": "session.destroyCookie",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/session.destroyCookie.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -654,12 +1062,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -684,12 +1099,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -714,12 +1136,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -744,12 +1173,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -774,12 +1210,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -804,12 +1247,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -834,12 +1284,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -864,12 +1321,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -894,12 +1358,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -924,12 +1395,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -954,12 +1432,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -984,12 +1469,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -1014,12 +1506,167 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ok": { "type": "boolean" },
+                    "ok": {
+                      "type": "boolean"
+                    },
                     "error": {
                       "type": "object",
                       "properties": {
-                        "code": { "type": "integer", "format": "int32" },
-                        "message": { "type": "string" }
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/totp.enroll": {
+      "post": {
+        "operationId": "totp.enroll",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/totp.enroll.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/totp.activate": {
+      "post": {
+        "operationId": "totp.activate",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/totp.activate.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/totp.eject": {
+      "post": {
+        "operationId": "totp.eject",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/totp.eject.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/email.verify": {
+      "post": {
+        "operationId": "email.verify",
+        "externalDocs": {
+          "url": "https://github.com/yeepio/yeep/blob/master/docs/methods/email.verify.md"
+        },
+        "responses": {
+          "200": {
+            "description": "JSON RPC",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
                       }
                     }
                   }

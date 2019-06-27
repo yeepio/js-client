@@ -25,7 +25,8 @@ const YeepClient = require('@yeep/client');
 
 // create new yeep client
 const yeep = new YeepClient({
-  baseUrl: 'https://yeep.acme.com', // replace this with your own domain
+  baseURL: 'https://yeep.acme.com', // replace this with your own domain
+  authorization: 'cookie',
 });
 
 yeep

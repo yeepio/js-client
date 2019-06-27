@@ -2,6 +2,7 @@
 import noop from 'lodash/noop';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import jwt from 'jsonwebtoken';
 import YeepClient from '../YeepClient';
 import openapi from './openapi.json';
 import YeepError from '../YeepError';
@@ -23,24 +24,90 @@ describe('YeepClient', () => {
       expect(() => new YeepClient(null)).toThrow(TypeError);
     });
 
-    test('throws error when `baseUrl` property is missing', () => {
+    test('throws error when `baseURL` property is missing', () => {
       expect(() => new YeepClient({})).toThrowError(
-        /Invalid "baseUrl" property/
+        /Invalid "baseURL" property/
       );
     });
 
-    test('contructs and returns new YeepClient instance', () => {
+    test('throws error when `authType` property is not string', () => {
       expect(
-        new YeepClient({
-          baseUrl: 'http://demo.yeep.com',
-        })
-      ).toBeInstanceOf(YeepClient);
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            authType: 123,
+          })
+      ).toThrowError(/Invalid "authType" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            authType: false,
+          })
+      ).toThrowError(/Invalid "authType" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            authType: null,
+          })
+      ).toThrowError(/Invalid "authType" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            authType: noop,
+          })
+      ).toThrowError(/Invalid "authType" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            authType: {},
+          })
+      ).toThrowError(/Invalid "authType" property/);
+    });
+
+    test('throws error when `authType` property does not contain an allowed value', () => {
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            authType: 'invalid',
+          })
+      ).toThrowError(/Invalid "authType" value; expected one of/);
+    });
+
+    test('contructs and returns new YeepClient instance', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+      });
+      expect(client).toBeInstanceOf(YeepClient);
+      expect(client.session).toMatchObject({
+        type: 'bearer',
+        token: '',
+        expiresAt: new Date(0),
+      });
+    });
+
+    test('accepts "cookie" authType', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+        authType: 'cookie',
+      });
+      expect(client).toBeInstanceOf(YeepClient);
+      expect(client.session).toMatchObject({
+        type: 'cookie',
+        token: '',
+        expiresAt: new Date(0),
+      });
     });
   });
 
   describe('api()', () => {
     const client = new YeepClient({
-      baseUrl: 'http://demo.yeep.com',
+      baseURL: 'http://demo.yeep.com',
+      authToken: 'bearer',
     });
 
     test('generates api based on API docs and memoizes response', async () => {
@@ -167,6 +234,163 @@ describe('YeepClient', () => {
           message: 'foo',
         });
       }
+    });
+  });
+
+  describe('createSession()', () => {
+    const token = jwt.sign({ foo: 'bar' }, 'shhhhh', {
+      expiresIn: 5 * 60, // i.e. 5 mins
+    });
+    const decoded = jwt.decode(token);
+
+    describe('bearer', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+        authToken: 'bearer',
+      });
+      mock.onPost('/api/session.issueToken').replyOnce(200, {
+        ok: 'true',
+        token,
+        expiresAt: new Date(decoded.exp * 1000).toString(),
+      });
+      mock.onPost('/api/session.destroyToken').replyOnce(200, {
+        ok: 'true',
+      });
+
+      afterAll(async () => {
+        await client.destroySession();
+      });
+
+      test('throws error when `props` param is missing', () => {
+        expect(client.createSession()).rejects.toThrow(TypeError);
+      });
+
+      test('throws error when `props` param is not an object', () => {
+        expect(client.createSession(false)).rejects.toThrow(TypeError);
+        expect(client.createSession('abc')).rejects.toThrow(TypeError);
+        expect(client.createSession(123)).rejects.toThrow(TypeError);
+        expect(client.createSession(noop)).rejects.toThrow(TypeError);
+        expect(client.createSession(null)).rejects.toThrow(TypeError);
+      });
+
+      test('throws error when `user` property is missing', () => {
+        expect(client.createSession({})).rejects.toThrowError(
+          /Invalid "user" property/
+        );
+      });
+
+      test('throws error when `password` property is missing', () => {
+        expect(
+          client.createSession({
+            user: 'coyote',
+          })
+        ).rejects.toThrowError(/Invalid "password" property/);
+      });
+
+      test('retrieves session token and schedules next refresh', async () => {
+        await client.createSession({
+          user: 'coyote',
+          password: 'catch-the-b1rd$',
+        });
+        expect(client.session).toMatchObject({
+          token,
+          expiresAt: new Date(decoded.exp * 1000),
+        });
+      });
+
+      test('sets authorization header', async () => {
+        expect(client.getHeaders()).toMatchObject({
+          Authorization: `Bearer ${token}`,
+        });
+      });
+    });
+  });
+
+  describe('destroySession()', () => {
+    const token = jwt.sign({ foo: 'bar' }, 'shhhhh', {
+      expiresIn: 5 * 60, // i.e. 5 mins
+    });
+    const decoded = jwt.decode(token);
+
+    describe('bearer', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+        authToken: 'bearer',
+      });
+      mock.onPost('/api/session.issueToken').replyOnce(200, {
+        ok: 'true',
+        token,
+        expiresAt: new Date(decoded.exp * 1000).toString(),
+      });
+      mock.onPost('/api/session.destroyToken').replyOnce(200, {
+        ok: 'true',
+      });
+
+      describe('without prior login', () => {
+        test('throws error - session token not found', async () => {
+          expect(client.destroySession()).rejects.toThrow(
+            /Session token not found/
+          );
+        });
+      });
+
+      describe('with prior login', () => {
+        beforeAll(async () => {
+          await client.createSession({
+            user: 'coyote',
+            password: 'catch-the-b1rd$',
+          });
+        });
+
+        test('destroys session token and cancels next refresh', async () => {
+          await client.destroySession();
+          expect(client.session).toMatchObject({
+            token: '',
+            expiresAt: new Date(0),
+          });
+        });
+
+        test('unsets authorization header', async () => {
+          expect(client.getHeaders()).not.toMatchObject({
+            Authorization: expect.any(String),
+          });
+        });
+      });
+    });
+  });
+
+  describe('hydrateSession()', () => {
+    const token = jwt.sign({ foo: 'bar' }, 'shhhhh', {
+      expiresIn: 5 * 60, // i.e. 5 mins
+    });
+    const decoded = jwt.decode(token);
+
+    describe('cookie', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+        authType: 'cookie',
+      });
+
+      test('throws error - cookie session cannot be hydrated', async () => {
+        expect(() => client.hydrateSession({ token })).toThrowError(
+          'You cannot hydrate the session state with session type is "cookie"'
+        );
+      });
+    });
+
+    describe('bearer', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+        authType: 'bearer',
+      });
+
+      test('hydrates session state', async () => {
+        expect(() => client.hydrateSession({ token })).not.toThrow();
+        expect(client.session).toMatchObject({
+          token,
+          expiresAt: new Date(decoded.exp * 1000),
+        });
+      });
     });
   });
 });
