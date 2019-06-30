@@ -20,23 +20,23 @@ $ npm install @yeep/client
 
 ## Quick start
 
+#### Create yeep client
+
 ```javascript
 const YeepClient = require('@yeep/client');
 
-// create new yeep client
 const yeep = new YeepClient({
   baseURL: 'https://yeep.acme.com', // replace this with your own domain
-  authorization: 'cookie',
 });
+```
 
+#### Create session to use with authenticated API requests, a.k.a. login
+
+```javascript
 yeep
-  .api() // retrieve api object - this is async, i.e. returns promise
-  .then((api) => {
-    // make api call
-    return api.session.create({
-      user: 'coyote@acme.com',
-      password: 'catch-the-b1rd$',
-    });
+  .login({
+    user: 'coyote@acme.com',
+    password: 'catch-the-b1rd$',
   })
   .then((data) => {
     // do something with session data
@@ -46,71 +46,41 @@ yeep
   });
 ```
 
-## Session management
-
-Session tokens expire and you need to refresh them manually. Having long expiration times is a bad security practice. Yeep exposes _SessionManager_ to manage session tokens automatically.
+#### Make an API call
 
 ```javascript
-const YeepClient = require('@yeep/client');
-const SessionManager = require('@yeep/client/SessionManager');
-
-// create new yeep client
-const yeep = new YeepClient({
-  baseUrl: 'https://yeep.acme.com', // replace this with your own domain
-});
-
-// create session manager
-const sessionManager = new SessionManager(yeep);
-
-// subscribe to session create events
-sessionManager.on('create', ({ accessToken, refreshToken }) => {
-  console.log('session created');
-});
-
-// subscribe to session refresh events
-sessionManager.on('refresh', ({ accessToken, refreshToken }) => {
-  console.log('session updated');
-});
-
-// subscribe to session destroy events
-sessionManager.on('destroy', () => {
-  console.log('session destroyed');
-});
-
-// subscribe to session errors
-sessionManager.on('error', (err) => {
-  console.error('bummer, an error occured:', err);
-});
-
-// create new session and automatically refresh it before it expires
-sessionManager.login({
-  user: 'coyote@acme.com',
-  password: 'catch-the-b1rd$',
-});
-
-// when you are done with your session simply call...
-sessionManager.logout();
+yeep
+  .api() // retrieve api object - this is async, i.e. returns promise
+  .then((api) => {
+    // make api call
+    return api.user.info({
+      id: '507f191e810c19729de860ea',
+      projection: {
+        permissions: true,
+        roles: true,
+      },
+    });
+  })
+  .then((data) => {
+    // do something with user info data
+  })
+  .catch((err) => {
+    // handle error
+  });
 ```
 
-#### Notes
+#### Destroy an existing session, a.k.a. logout
 
-1. _SessionManager_ VS session API method;
-
-   The two are quite different!
-
-   ```javascript
-   sessionManager.login(); // stateful function renewing session tokens automatically before they expire
-   ```
-
-   ```javascript
-   yeep.api().then((api) => {
-     api.session.create(); // stateless API call
-   });
-   ```
-
-2. _SessionManager_ is an event emitter;
-
-   You may use `.on()`, `.once()`, `addListener()` and `removeListener()` as described at [https://nodejs.org/api/events.html](https://nodejs.org/api/events.html).
+```javascript
+yeep
+  .logout()
+  .then(() => {
+    // handle successful logout
+  })
+  .catch((err) => {
+    // handle error
+  });
+```
 
 ## License
 

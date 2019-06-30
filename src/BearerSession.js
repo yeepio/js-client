@@ -34,11 +34,23 @@ class BearerSession {
       );
     }
 
+    const { user, password } = props;
+    if (!isString(user)) {
+      throw new TypeError(
+        `Invalid "user" property; expected string, received ${typeof user}`
+      );
+    }
+    if (!isString(password)) {
+      throw new TypeError(
+        `Invalid "password" property; expected string, received ${typeof password}`
+      );
+    }
+
     // retrieve api object
     const api = await this.client.api();
 
     // issue bearer session token
-    const response = await api.session.issueToken(props);
+    const response = await api.session.issueToken({ user, password });
     const { token, expiresAt } = response;
 
     // update session state

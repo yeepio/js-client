@@ -1,4 +1,5 @@
 import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
 import YeepClient from './YeepClient';
 
 class CookieSession {
@@ -27,11 +28,23 @@ class CookieSession {
       );
     }
 
+    const { user, password } = props;
+    if (!isString(user)) {
+      throw new TypeError(
+        `Invalid "user" property; expected string, received ${typeof user}`
+      );
+    }
+    if (!isString(password)) {
+      throw new TypeError(
+        `Invalid "password" property; expected string, received ${typeof password}`
+      );
+    }
+
     // retrieve api object
     const api = await this.client.api();
 
     // issue cookie session
-    const response = await api.session.setCookie(props);
+    const response = await api.session.setCookie({ user, password });
     return response;
   }
 
