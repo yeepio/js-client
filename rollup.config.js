@@ -6,7 +6,7 @@ import progress from 'rollup-plugin-progress';
 import json from 'rollup-plugin-json';
 import copy from 'rollup-plugin-copy';
 
-export default ['src/index.js', 'src/SessionManager.js'].map((file, i) => ({
+export default ['src/index.js'].map((file, i) => ({
   input: file,
   output: [
     {
