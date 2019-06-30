@@ -1,11 +1,19 @@
 {
   "rootDir": ".",
   "testEnvironment": "node",
-  "collectCoverageFrom": ["src/**/*.{js}"],
-  "testPathIgnorePatterns": ["/node_modules", "/dist"],
+  "collectCoverageFrom": [
+    "src/**/*.{js}"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules",
+    "/dist"
+  ],
   "transform": {
     "^.+\\.jsx$": "babel-jest",
     "^.+\\.js$": "babel-jest"
   },
+  "modulePathIgnorePatterns": [
+    "<rootDir>/dist"
+  ],
   "verbose": true
 }
