@@ -27,71 +27,88 @@ class BearerSession {
    * @property {string} password the user password
    * @returns {Promise<Object>}
    */
-  async login(props) {
+  login(props) {
     if (!isObject(props)) {
-      throw new TypeError(
-        `Invalid "props" argument; expected object, received ${typeof props}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "props" argument; expected object, received ${typeof props}`
+        )
       );
     }
 
     const { user, password } = props;
     if (!isString(user)) {
-      throw new TypeError(
-        `Invalid "user" property; expected string, received ${typeof user}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "user" property; expected string, received ${typeof user}`
+        )
       );
     }
     if (!isString(password)) {
-      throw new TypeError(
-        `Invalid "password" property; expected string, received ${typeof password}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "password" property; expected string, received ${typeof password}`
+        )
       );
     }
 
     // retrieve api object
-    const api = await this.client.api();
+    return this.client
+      .api()
+      .then((api) => {
+        // issue bearer session token
+        return api.session.issueToken({ user, password });
+      })
+      .then((response) => {
+        const { token, expiresAt } = response;
 
-    // issue bearer session token
-    const response = await api.session.issueToken({ user, password });
-    const { token, expiresAt } = response;
+        // update session state
+        this.state.token = token;
+        this.state.expiresAt = new Date(expiresAt);
 
-    // update session state
-    this.state.token = token;
-    this.state.expiresAt = new Date(expiresAt);
+        // parse token
+        const decoded = jwtDecode(token);
 
-    // schedule next session refresh - 10 secs before expiration
-    this.scheduleNextRefresh(
-      this.state.expiresAt.getTime() - Date.now() - 10000
-    );
+        // schedule next session refresh - 10 secs before expiration
+        this.scheduleNextRefresh(
+          this.state.expiresAt.getTime() - Date.now() - 10000
+        );
 
-    // return token payload
-    const decoded = jwtDecode(token);
-    return decoded.payload;
+        // return payload
+        return decoded.payload;
+      });
   }
 
   /**
    * Destroys an existing bearer session.
    * @returns {Promise}
    */
-  async logout() {
+  logout() {
     if (!this.state.token) {
-      throw new Error(
-        "Session token not found; it doesn't make sense to call logout() if you don't have an active session"
+      return Promise.reject(
+        new Error(
+          "Session token not found; it doesn't make sense to call logout() if you don't have an active session"
+        )
       );
     }
 
     // retrieve api object
-    const api = await this.client.api();
+    return this.client
+      .api()
+      .then((api) => {
+        // destroy bearer session token
+        return api.session.destroyToken({
+          token: this.state.token,
+        });
+      })
+      .then(() => {
+        // cancel next session refresh
+        this.cancelNextRefresh();
 
-    // destroy bearer session token
-    await api.session.destroyToken({
-      token: this.state.token,
-    });
-
-    // cancel next session refresh
-    this.cancelNextRefresh();
-
-    // clear session state
-    this.state.token = '';
-    this.state.expiresAt = new Date(0);
+        // clear session state
+        this.state.token = '';
+        this.state.expiresAt = new Date(0);
+      });
   }
 
   /**
@@ -134,30 +151,35 @@ class BearerSession {
     this.scheduleNextRefresh(dt < 10000 ? dt : dt - 10000);
   }
 
-  async refresh() {
+  refresh() {
     // ensure session already exists
     if (!this.state.token) {
-      throw new Error(
-        "Session token not found; it doesn't make sense to call refresh() if you don't have an active session"
+      return Promise.reject(
+        new Error(
+          "Session token not found; it doesn't make sense to call refresh() if you don't have an active session"
+        )
       );
     }
 
     // retrieve api object
-    const api = await this.client.api();
+    this.client
+      .api()
+      .then((api) => {
+        // refresh bearer session token
+        return api.session.refreshToken({
+          token: this.state.token,
+        });
+      })
+      .then((response) => {
+        // update session state
+        const { token, expiresAt } = response;
+        this.state.token = token;
+        this.state.expiresAt = new Date(expiresAt);
 
-    // refresh bearer session token
-    const response = await api.session.refreshToken({
-      token: this.state.token,
-    });
-
-    // update session state
-    const { token, expiresAt } = response;
-    this.state.token = token;
-    this.state.expiresAt = new Date(expiresAt);
-
-    // schedule next session refresh
-    const dt = this.state.expiresAt.getTime() - Date.now();
-    this.scheduleNextRefresh(dt < 10000 ? dt : dt - 10000);
+        // schedule next session refresh
+        const dt = this.state.expiresAt.getTime() - Date.now();
+        this.scheduleNextRefresh(dt < 10000 ? dt : dt - 10000);
+      });
   }
 
   scheduleNextRefresh(ms, tries = 0) {

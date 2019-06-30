@@ -21,56 +21,60 @@ class CookieSession {
    * @property {string} password the user password
    * @returns {Promise<Object>}
    */
-  async login(props) {
+  login(props) {
     if (!isObject(props)) {
-      throw new TypeError(
-        `Invalid "props" argument; expected object, received ${typeof props}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "props" argument; expected object, received ${typeof props}`
+        )
       );
     }
 
     const { user, password } = props;
     if (!isString(user)) {
-      throw new TypeError(
-        `Invalid "user" property; expected string, received ${typeof user}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "user" property; expected string, received ${typeof user}`
+        )
       );
     }
     if (!isString(password)) {
-      throw new TypeError(
-        `Invalid "password" property; expected string, received ${typeof password}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "password" property; expected string, received ${typeof password}`
+        )
       );
     }
 
     // retrieve api object
-    const api = await this.client.api();
-
-    // issue cookie session
-    const response = await api.session.setCookie({ user, password });
-    return response;
+    return this.client.api().then((api) => {
+      // issue cookie session
+      return api.session.setCookie({ user, password });
+    });
   }
 
   /**
    * Destroys an existing cookie session.
    * @returns {Promise}
    */
-  async logout() {
+  logout() {
     // retrieve api object
-    const api = await this.client.api();
-
-    // destroy bearer session token
-    await api.session.destroyCookie();
+    return this.client.api().then((api) => {
+      // destroy bearer session token
+      return api.session.destroyCookie();
+    });
   }
 
   /**
    * Refreshes an existing cookie session.
    * @returns {Promise}
    */
-  async refresh() {
+  refresh() {
     // retrieve api object
-    const api = await this.client.api();
-
-    // refresh bearer session token
-    const response = await api.session.refreshCookie();
-    return response;
+    return this.client.api().then((api) => {
+      // refresh bearer session token
+      return api.session.refreshCookie();
+    });
   }
 }
 

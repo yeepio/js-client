@@ -75,66 +75,74 @@ class YeepClient {
     return headers;
   }
 
-  request = async (ctx, props = {}) => {
+  request = (ctx, props = {}) => {
     if (!isObject(props)) {
-      throw new TypeError(
-        `Invalid "props" argument; expected object, received ${typeof props}`
+      return Promise.reject(
+        new TypeError(
+          `Invalid "props" argument; expected object, received ${typeof props}`
+        )
       );
     }
 
     const { cancelToken, ...otherProps } = props;
 
-    const response = await this.client.request({
-      method: ctx.method,
-      url: ctx.path,
-      headers: this.getHeaders(),
-      data: otherProps,
-      cancelToken,
-    });
+    return this.client
+      .request({
+        method: ctx.method,
+        url: ctx.path,
+        headers: this.getHeaders(),
+        data: otherProps,
+        cancelToken,
+      })
+      .then((response) => {
+        const { data } = response;
 
-    const { data } = response;
+        if (!data.ok) {
+          throw new YeepError(
+            data.error.message,
+            data.error.code,
+            data.error.details
+          );
+        }
 
-    if (!data.ok) {
-      throw new YeepError(
-        data.error.message,
-        data.error.code,
-        data.error.details
-      );
-    }
-
-    return data;
+        return data;
+      });
   };
 
-  api = memoize(async () => {
-    // retrieve API docs (i.e. open api v3 specfile)
-    const response = await this.client.request({
-      method: 'get',
-      url: '/api/docs',
-    });
+  api = memoize(() => {
+    return (
+      this.client
+        // retrieve API docs (i.e. open api v3 specfile)
+        .request({
+          method: 'get',
+          url: '/api/docs',
+        })
+        // create api object
+        .then((response) => {
+          const api = {
+            version: response.data.info.version,
+          };
 
-    // create api object
-    const api = {
-      version: response.data.info.version,
-    };
+          // decorate api object
+          const pathObj = response.data.paths;
+          for (const path in pathObj) {
+            if (pathObj[path].post) {
+              const operationObj = pathObj[path].post;
+              set(
+                api,
+                operationObj.operationId,
+                partial(this.request, {
+                  method: 'post',
+                  path,
+                })
+              );
+            }
+          }
 
-    // decorate api object
-    const pathObj = response.data.paths;
-    for (const path in pathObj) {
-      if (pathObj[path].post) {
-        const operationObj = pathObj[path].post;
-        set(
-          api,
-          operationObj.operationId,
-          partial(this.request, {
-            method: 'post',
-            path,
-          })
-        );
-      }
-    }
-
-    // return api object
-    return api;
+          // return api object
+          return api;
+        })
+    );
   });
 
   login = (props) => this.session.login(props);
