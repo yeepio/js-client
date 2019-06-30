@@ -30,9 +30,11 @@ export default ['src/index.js'].map((file, i) => ({
     esModuleInterop(),
     i === 0
       ? copy({
-          'README.md': 'dist/README.md',
-          LICENSE: 'dist/LICENSE',
-          'package.json': 'dist/package.json',
+          targets: [
+            { src: 'README.md', dest: 'dist' },
+            { src: 'LICENSE', dest: 'dist' },
+            { src: 'package.json', dest: 'dist' },
+          ],
         })
       : null,
     progress({
