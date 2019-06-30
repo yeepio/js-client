@@ -117,8 +117,8 @@ class YeepClient {
           method: 'get',
           url: '/api/docs',
         })
-        // create api object
         .then((response) => {
+          // create api object
           const api = {
             version: response.data.info.version,
           };
