@@ -2,7 +2,6 @@
 import noop from 'lodash/noop';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import jwt from 'jsonwebtoken';
 import YeepClient from './YeepClient';
 import CookieSession from './CookieSession';
 import openapi from './__tests__/openapi.json';
