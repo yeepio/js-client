@@ -2,6 +2,7 @@ import axios from 'axios';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import memoize from 'lodash/memoize';
+import noop from 'lodash/noop';
 import set from 'lodash/set';
 import partial from 'lodash/partial';
 import isNode from 'detect-node';
@@ -17,7 +18,12 @@ class YeepClient {
       );
     }
 
-    const { baseURL, authType = isNode ? 'bearer' : 'cookie' } = props;
+    const {
+      baseURL,
+      authType = isNode ? 'bearer' : 'cookie',
+      onLogin = noop,
+      onLogout = noop,
+    } = props;
 
     if (!isString(baseURL)) {
       throw new TypeError(
@@ -63,6 +69,8 @@ class YeepClient {
 
     // set client
     this.client = axios.create(options);
+    this.onLogin = onLogin;
+    this.onLogout = onLogout;
   }
 
   getHeaders() {
@@ -145,8 +153,18 @@ class YeepClient {
     );
   });
 
-  login = (props) => this.session.login(props);
-  logout = () => this.session.logout();
+  login = (props) => {
+    return this.session.login(props).then((data) => {
+      this.onLogin(data);
+      return data;
+    });
+  };
+
+  logout = () => {
+    return this.session.logout().then(() => {
+      this.onLogout();
+    });
+  };
 }
 
 export default YeepClient;
