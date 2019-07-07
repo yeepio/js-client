@@ -79,6 +79,44 @@ describe('YeepClient', () => {
       ).toThrowError(/Invalid "authType" value; expected one of/);
     });
 
+    test('throws error when `onError` property is not string', () => {
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            onError: 123,
+          })
+      ).toThrowError(/Invalid "onError" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            onError: false,
+          })
+      ).toThrowError(/Invalid "onError" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            onError: null,
+          })
+      ).toThrowError(/Invalid "onError" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            onError: 'abc',
+          })
+      ).toThrowError(/Invalid "onError" property/);
+      expect(
+        () =>
+          new YeepClient({
+            baseURL: 'http://demo.yeep.com',
+            onError: {},
+          })
+      ).toThrowError(/Invalid "onError" property/);
+    });
+
     test('contructs and returns new YeepClient instance', () => {
       const client = new YeepClient({
         baseURL: 'http://demo.yeep.com',
@@ -94,6 +132,14 @@ describe('YeepClient', () => {
       });
       expect(client).toBeInstanceOf(YeepClient);
       expect(client.session).toBeInstanceOf(CookieSession);
+    });
+
+    test('accepts "onError" callback', () => {
+      const client = new YeepClient({
+        baseURL: 'http://demo.yeep.com',
+        onError: (err) => console.error(err),
+      });
+      expect(client).toBeInstanceOf(YeepClient);
     });
   });
 

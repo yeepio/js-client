@@ -1,6 +1,7 @@
 import axios from 'axios';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
 import memoize from 'lodash/memoize';
 import noop from 'lodash/noop';
 import set from 'lodash/set';
@@ -21,8 +22,7 @@ class YeepClient {
     const {
       baseURL,
       authType = isNode ? 'bearer' : 'cookie',
-      onLogin = noop,
-      onLogout = noop,
+      onError = noop,
     } = props;
 
     if (!isString(baseURL)) {
@@ -34,6 +34,12 @@ class YeepClient {
     if (!isString(authType)) {
       throw new TypeError(
         `Invalid "authType" property; expected string, received ${typeof authType}`
+      );
+    }
+
+    if (!isFunction(onError)) {
+      throw new TypeError(
+        `Invalid "onError" property; expected function, received ${typeof onError}`
       );
     }
 
@@ -69,8 +75,7 @@ class YeepClient {
 
     // set client
     this.client = axios.create(options);
-    this.onLogin = onLogin;
-    this.onLogout = onLogout;
+    this.onError = onError;
   }
 
   getHeaders() {
@@ -106,11 +111,14 @@ class YeepClient {
         const { data } = response;
 
         if (!data.ok) {
-          throw new YeepError(
+          const err = new YeepError(
             data.error.message,
             data.error.code,
             data.error.details
           );
+
+          this.onError(err);
+          throw err;
         }
 
         return data;
@@ -154,16 +162,11 @@ class YeepClient {
   });
 
   login = (props) => {
-    return this.session.login(props).then((data) => {
-      this.onLogin(data);
-      return data;
-    });
+    return this.session.login(props);
   };
 
   logout = () => {
-    return this.session.logout().then(() => {
-      this.onLogout();
-    });
+    return this.session.logout();
   };
 }
 
