@@ -27,7 +27,7 @@ class BearerSession {
    * @property {string} password the user password
    * @returns {Promise<Object>}
    */
-  login(props) {
+  create(props) {
     if (!isObject(props)) {
       return Promise.reject(
         new TypeError(
@@ -83,11 +83,11 @@ class BearerSession {
    * Destroys an existing bearer session.
    * @returns {Promise}
    */
-  logout() {
+  destroy() {
     if (!this.state.token) {
       return Promise.reject(
         new Error(
-          "Session token not found; it doesn't make sense to call logout() if you don't have an active session"
+          "Session token not found; it doesn't make sense to call destroy() if you don't have an active session"
         )
       );
     }

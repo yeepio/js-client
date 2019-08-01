@@ -40,7 +40,7 @@ describe('BearerSession', () => {
     });
   });
 
-  describe('login()', () => {
+  describe('create()', () => {
     const token = jwt.sign({ foo: 'bar' }, 'shhhhh', {
       expiresIn: 5 * 60, // i.e. 5 mins
     });
@@ -52,28 +52,30 @@ describe('BearerSession', () => {
       mock.onPost('/api/session.destroyToken').replyOnce(200, {
         ok: 'true',
       });
-      await session.logout();
+      await session.destroy();
     });
 
     test('throws error when `props` param is missing', () => {
-      expect(session.login()).rejects.toThrow(TypeError);
+      expect(session.create()).rejects.toThrow(TypeError);
     });
 
     test('throws error when `props` param is not an object', () => {
-      expect(session.login(false)).rejects.toThrow(TypeError);
-      expect(session.login('abc')).rejects.toThrow(TypeError);
-      expect(session.login(123)).rejects.toThrow(TypeError);
-      expect(session.login(noop)).rejects.toThrow(TypeError);
-      expect(session.login(null)).rejects.toThrow(TypeError);
+      expect(session.create(false)).rejects.toThrow(TypeError);
+      expect(session.create('abc')).rejects.toThrow(TypeError);
+      expect(session.create(123)).rejects.toThrow(TypeError);
+      expect(session.create(noop)).rejects.toThrow(TypeError);
+      expect(session.create(null)).rejects.toThrow(TypeError);
     });
 
     test('throws error when `user` property is missing', () => {
-      expect(session.login({})).rejects.toThrowError(/Invalid "user" property/);
+      expect(session.create({})).rejects.toThrowError(
+        /Invalid "user" property/
+      );
     });
 
     test('throws error when `password` property is missing', () => {
       expect(
-        session.login({
+        session.create({
           user: 'coyote',
         })
       ).rejects.toThrowError(/Invalid "password" property/);
@@ -85,7 +87,7 @@ describe('BearerSession', () => {
         token,
         expiresAt: new Date(decoded.exp * 1000).toString(),
       });
-      await session.login({
+      await session.create({
         user: 'coyote',
         password: 'catch-the-b1rd$',
       });
@@ -97,7 +99,7 @@ describe('BearerSession', () => {
     });
   });
 
-  describe('logout()', () => {
+  describe('destroy()', () => {
     const token = jwt.sign({ foo: 'bar' }, 'shhhhh', {
       expiresIn: 5 * 60, // i.e. 5 mins
     });
@@ -105,20 +107,20 @@ describe('BearerSession', () => {
 
     const session = new BearerSession(client);
 
-    describe('without prior login', () => {
+    describe('without prior create', () => {
       test('throws error - session token not found', async () => {
-        expect(session.logout()).rejects.toThrow(/Session token not found/);
+        expect(session.destroy()).rejects.toThrow(/Session token not found/);
       });
     });
 
-    describe('with prior login', () => {
+    describe('with prior create', () => {
       beforeAll(async () => {
         mock.onPost('/api/session.issueToken').replyOnce(200, {
           ok: 'true',
           token,
           expiresAt: new Date(decoded.exp * 1000).toString(),
         });
-        await session.login({
+        await session.create({
           user: 'coyote',
           password: 'catch-the-b1rd$',
         });
@@ -128,7 +130,7 @@ describe('BearerSession', () => {
         mock.onPost('/api/session.destroyToken').replyOnce(200, {
           ok: 'true',
         });
-        await session.logout();
+        await session.destroy();
         expect(session.state).toMatchObject({
           token: '',
           expiresAt: new Date(0),
@@ -138,7 +140,7 @@ describe('BearerSession', () => {
     });
   });
 
-  describe('hydrateSession()', () => {
+  describe('hydrate()', () => {
     const token = jwt.sign({ foo: 'bar' }, 'shhhhh', {
       expiresIn: 5 * 60, // i.e. 5 mins
     });
@@ -146,12 +148,12 @@ describe('BearerSession', () => {
 
     const session = new BearerSession(client);
 
-    describe('without prior login', () => {
+    describe('without prior create', () => {
       afterAll(async () => {
         mock.onPost('/api/session.destroyToken').replyOnce(200, {
           ok: 'true',
         });
-        await session.logout();
+        await session.destroy();
       });
 
       test('hydrates session state', async () => {
@@ -164,14 +166,14 @@ describe('BearerSession', () => {
       });
     });
 
-    describe('with prior login', () => {
+    describe('with prior create', () => {
       beforeAll(async () => {
         mock.onPost('/api/session.issueToken').replyOnce(200, {
           ok: 'true',
           token,
           expiresAt: new Date(decoded.exp * 1000).toString(),
         });
-        await session.login({
+        await session.create({
           user: 'coyote',
           password: 'catch-the-b1rd$',
         });
@@ -181,7 +183,7 @@ describe('BearerSession', () => {
         mock.onPost('/api/session.destroyToken').replyOnce(200, {
           ok: 'true',
         });
-        await session.logout();
+        await session.destroy();
       });
 
       test('throws error - cannot hydrate an existing session', async () => {

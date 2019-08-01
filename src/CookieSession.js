@@ -21,7 +21,7 @@ class CookieSession {
    * @property {string} password the user password
    * @returns {Promise<Object>}
    */
-  login(props) {
+  create(props) {
     if (!isObject(props)) {
       return Promise.reject(
         new TypeError(
@@ -57,7 +57,7 @@ class CookieSession {
    * Destroys an existing cookie session.
    * @returns {Promise}
    */
-  logout() {
+  destroy() {
     // retrieve api object
     return this.client.api().then((api) => {
       // destroy bearer session token

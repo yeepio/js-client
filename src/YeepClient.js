@@ -184,12 +184,12 @@ class YeepClient {
     );
   });
 
-  login = (props) => {
-    return this.session.login(props);
+  createSession = (props) => {
+    return this.session.create(props);
   };
 
-  logout = () => {
-    return this.session.logout();
+  destroySession = () => {
+    return this.session.destroy();
   };
 }
 
