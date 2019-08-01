@@ -274,4 +274,49 @@ describe('YeepClient', () => {
       }
     });
   });
+
+  describe('issueCancelToken()', () => {
+    const client = new YeepClient({
+      baseURL: 'http://demo.yeep.com',
+    });
+
+    test('creates and returns new cancel token', () => {
+      expect(() => client.issueCancelToken('abc')).not.toThrow();
+      expect(client.cancelSourcesMap.has('abc')).toBe(true);
+    });
+  });
+
+  describe('redeemCancelToken()', () => {
+    const client = new YeepClient({
+      baseURL: 'http://demo.yeep.com',
+    });
+
+    beforeAll(async () => {
+      client.issueCancelToken(noop);
+    });
+
+    test('redeems cancel token', () => {
+      expect(() => client.redeemCancelToken(noop)).not.toThrow();
+      expect(client.cancelSourcesMap.has(noop)).toBe(false);
+    });
+  });
+
+  describe('issueCancelTokenAndRedeemPrevious()', () => {
+    const client = new YeepClient({
+      baseURL: 'http://demo.yeep.com',
+    });
+
+    beforeAll(async () => {
+      client.issueCancelToken(noop);
+    });
+
+    test('issues new cancel token, while redeeming previous', () => {
+      const prevSource = client.cancelSourcesMap.get(noop);
+      expect(() =>
+        client.issueCancelTokenAndRedeemPrevious(noop)
+      ).not.toThrow();
+      expect(client.cancelSourcesMap.has(noop)).toBe(true);
+      expect(client.cancelSourcesMap.get(noop)).not.toBe(prevSource);
+    });
+  });
 });

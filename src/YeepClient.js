@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CancelToken, isCancel } from 'axios';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
@@ -73,10 +73,14 @@ class YeepClient {
       options.httpsAgent = new https.Agent({ keepAlive: true });
     }
 
-    // set client
+    // construct axios client
     this.client = axios.create(options);
+
     this.onError = onError;
+    this.cancelSourcesMap = new Map();
   }
+
+  static isCancel = isCancel;
 
   getHeaders() {
     const headers = {};
@@ -87,6 +91,25 @@ class YeepClient {
 
     return headers;
   }
+
+  issueCancelToken = (key) => {
+    const cancelSource = CancelToken.source();
+    this.cancelSourcesMap.set(key, cancelSource);
+    return cancelSource.token;
+  };
+
+  redeemCancelToken = (key) => {
+    const cancelSource = this.cancelSourcesMap.get(key);
+    if (cancelSource) {
+      cancelSource.cancel();
+      this.cancelSourcesMap.delete(key);
+    }
+  };
+
+  issueCancelTokenAndRedeemPrevious = (key) => {
+    this.redeemCancelToken(key);
+    return this.issueCancelToken(key);
+  };
 
   request = (ctx, props = {}) => {
     if (!isObject(props)) {
